@@ -1,16 +1,66 @@
-import { LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNIN_ERROR, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNUP_ERROR, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "./actionType"
+ import { LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNIN_ERROR, SIGNIN_REQUEST, SIGNIN_SUCCESS, SIGNUP_ERROR, SIGNUP_REQUEST, SIGNUP_SUCCESS } from "./actionType";
 
-const initialstate = {
+// const initialState = {
+//   isLoading: false,
+//   isError: false,
+//   isAuth: false,  // Corrected the property name here
+//   email: "",
+//   password: "",
+//   token: localStorage.getItem("token") || ""
+// };
+
+// export const reducer = (state = initialState, { type, payload }) => {
+//   switch (type) {
+//     case SIGNUP_REQUEST:
+//     case SIGNIN_REQUEST:
+//     case LOGOUT_REQUEST:
+//       return { ...state, isLoading: true, isError: false };
+
+//     case SIGNUP_ERROR:
+//     case SIGNIN_ERROR:
+//       return { ...state, isError: true, isLoading: false };
+
+//     case SIGNUP_SUCCESS:
+//       return { ...state, isError: false, isLoading: false /*, include additional data if needed*/ };
+
+//     case SIGNIN_SUCCESS:
+//       localStorage.setItem("token", payload.token);
+//       return {
+//         ...state,
+//         isAuth: true,  // Corrected the property name here
+//         isError: false,
+//         isLoading: false,
+//         token: payload.token,
+//         // Only store necessary user details in the state, not email and password
+//       };
+
+//     case LOGOUT_SUCCESS:
+//       localStorage.removeItem("token");
+//       return {
+//         ...state,
+//         token: "",
+//         isAuth: false,  // Corrected the property name here
+//         username: "",
+//         email: "",
+//         isError: false,
+//       };
+
+//     default:
+//       return state;
+//   }
+// };
+
+
+
+const  initialState={
   isLoading: false,
-  isError: false,
-  isAuth:false,
-  email: "",
-  password: "",
-  token: localStorage.getItem("token") || ""
-};
+   isError: false,
+   isAuth: false,  // Corrected the property name here
+   token: localStorage.getItem("token") || ""
+}
 
-export const reducer = (state = initialstate, { type, payload }) => {
-  switch (type) {
+export const authReducer = (state = initialState, action) => {
+  switch (action.type) {
     case SIGNUP_REQUEST:
     case SIGNIN_REQUEST:
     case LOGOUT_REQUEST:
@@ -20,30 +70,25 @@ export const reducer = (state = initialstate, { type, payload }) => {
     case SIGNIN_ERROR:
       return { ...state, isError: true, isLoading: false };
 
-    case SIGNUP_SUCCESS:
-      return { ...state, isError: false, isLoading: false /*, include additional data if needed*/ };
-
     case SIGNIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        isAuth: true,
+        isAuth: true,  // Corrected the property name here
         isError: false,
         isLoading: false,
-        token: payload.token,
-    
+        token: action.payload.token,
         // Only store necessary user details in the state, not email and password
       };
-      case LOGOUT_SUCCESS:
-        localStorage.removeItem("token");
-        return {
-          ...state,
-          token: "",
-          isAuth: false,
-          username: "",
-          email: "",
-          isError: false,
-        };
+
+    case LOGOUT_SUCCESS:
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: "",
+        isAuth: false,  // Corrected the property name here
+        isError: false,
+      };
 
     default:
       return state;

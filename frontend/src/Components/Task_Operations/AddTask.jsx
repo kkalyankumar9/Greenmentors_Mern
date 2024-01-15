@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../Redux/Auth/action";
+
 import { useNavigate } from 'react-router-dom';
-import Navbar from "./Navbar";
+
+import { createTask } from "../../Redux/Task/action";
+import Navbar from "../Navbar";
 const Addtask = () => {
   const initialdata = {
     title: "",
@@ -27,9 +29,10 @@ const Addtask = () => {
       description: taskAdd.description,
       
     };
-    dispatch(signIn(user))
+    dispatch(createTask(user))
       .then((response) => {
         // Handle success
+        alert("data added")
     
       })
       .catch((error) => {
@@ -39,11 +42,11 @@ const Addtask = () => {
   };
   return (
     <>
-    <Navbar/>
+  <Navbar/>
   
     <div className="flex items-center justify-center h-screen">
     <div className="bg-white shadow-md rounded-md p-8 w-96">
-      <h1 className="text-3xl font-bold mb-4">Sign In</h1>
+      <h1 className="text-3xl font-bold mb-4">Add Task</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2">

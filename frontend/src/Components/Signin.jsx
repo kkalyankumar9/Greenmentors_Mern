@@ -10,9 +10,10 @@ const Signin = () => {
   };
   const [signData, setSignData] = useState(initialdata);
 
-  // const isAuth=useSelector((store)=>store.AuthReducer.isAuth)
+const isAuth=useSelector((store)=>store.AuthReducer.isAuth)
   // const isLoading = useSelector((store) => store.AuthReducer.isLoading);
   // const isError = useSelector((store) => store.AuthReducer.isError);
+//  console.log("data"+isAuth)
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -30,9 +31,10 @@ const Signin = () => {
     dispatch(signIn(user))
       .then((response) => {
         // Handle success
-        console.log("Signin successful:", response);
+        // console.log("Signin successful:", response);
         navigate("/")
         alert(` Login successfully`)
+        // console.log(isAutheticated)
       })
       .catch((error) => {
         // Handle error

@@ -3,14 +3,16 @@ import { ADD_ERROR, ADD_REQUEST, ADD_SUCCESS, DELETE_ERROR, DELETE_REQUEST, DELE
 
 
 export const getTaskdata=()=>async(dispatch)=>{
+    
     dispatch({type:GET_REQUEST})
     try {
       const response = await axios.get("https://greenmentor-server.onrender.com/crud/get", {
         headers: { "Authorization": ` ${localStorage.getItem("token")}` }
     });
-        dispatch({type:GET_SUCCESS,payload:response.data})
+        dispatch({type:GET_SUCCESS,payload:response})
         
-        console.log(response);
+         console.log(response);
+       
       } catch (error) {
         dispatch({type:GET_ERROR})
         console.error(error);
@@ -43,9 +45,7 @@ export const deleteTask = (taskId) => async (dispatch) => {
           headers: { "Authorization": ` ${localStorage.getItem("token")}` }
       });
 
-      // After deleting a task, you might want to fetch the updated list of tasks
-      dispatch(getTaskdata());
-
+    
       dispatch({ type: DELETE_SUCCESS, payload: taskId });
   } catch (error) {
       dispatch({ type: DELETE_ERROR });
