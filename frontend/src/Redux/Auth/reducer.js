@@ -3,7 +3,7 @@ import { LOGOUT_REQUEST, LOGOUT_SUCCESS, SIGNIN_ERROR, SIGNIN_REQUEST, SIGNIN_SU
 const initialstate = {
   isLoading: false,
   isError: false,
-  isAuth: false,
+  isAuth:false,
   email: "",
   password: "",
   token: localStorage.getItem("token") || ""
@@ -27,10 +27,11 @@ export const reducer = (state = initialstate, { type, payload }) => {
       localStorage.setItem("token", payload.token);
       return {
         ...state,
+        isAuth: true,
         isError: false,
         isLoading: false,
         token: payload.token,
-        isAuth: true,
+    
         // Only store necessary user details in the state, not email and password
       };
       case LOGOUT_SUCCESS:

@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from '../Redux/Auth/action';
 const Navbar = () => {
-  const isAuth = useSelector((store) => store.AuthReducer.isAuth);
+  const {isAuth} = useSelector((store) => store.AuthReducer);
+  const isLoading = useSelector((store) => store.AuthReducer.isLoading);
+  const token = localStorage.getItem("token");
+  console.log(isAuth,isLoading)
   const dispatch=useDispatch()
   const handleClick=()=>{
     dispatch(logoutUser())
@@ -27,7 +30,7 @@ const Navbar = () => {
   <Link to="/signup" className="text-lg hover:underline bg-yellow-500 text-white px-3 py-1 rounded">
     Sign up
   </Link>
-  {isAuth ? (
+  {isAuth? (
     <button onClick={handleClick} className="text-lg hover:underline bg-yellow-500 text-white px-3 py-1 rounded">
       Logout
     </button>
