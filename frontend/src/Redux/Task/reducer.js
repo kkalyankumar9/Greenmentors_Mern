@@ -1,4 +1,4 @@
-import { DELETE_ERROR, DELETE_REQUEST, DELETE_SUCCESS, GET_ERROR, GET_REQUEST, GET_SUCCESS } from "./actionType"
+import { DELETE_ERROR, DELETE_REQUEST, DELETE_SUCCESS, GET_ERROR, GET_REQUEST, GET_SUCCESS, UPDATE_ERROR, UPDATE_REQUEST, UPDATE_SUCCESS } from "./actionType"
 
 const initialState={
   taskData:[],
@@ -22,6 +22,16 @@ switch(action.type){
     // Update taskData after deleting a task
     const updatedTaskData = state.taskData.filter(task => task._id !== action.payload);
     return { ...state, taskData: [...updatedTaskData], isLoading: false, isError: false };
+    case UPDATE_REQUEST:
+      return { ...state, isLoading: true, isError: false };
+    case UPDATE_ERROR:
+      return { ...state, isLoading: false, isError: true };
+    case UPDATE_SUCCESS:
+      // Update taskData after successfully updating a task
+      const updatedData = state.taskData.map((task) =>
+        task._id === action.payload._id ? action.payload : task
+      );
+      return { ...state, taskData: updatedData, isLoading: false, isError: false };
   
   default:return state
 

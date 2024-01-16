@@ -7,32 +7,28 @@ const EditTask = () => {
   const dispatch = useDispatch();
   const { taskId } = useParams();
   const taskData = useSelector((store) => store.TaskReducer.taskData);
+  console.log()
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  // useEffect(() => {
-  //   // Find the task with the specified taskId in the taskData
-  //   const existingTask = taskData.data?.find((task) => task._id === taskId);
+// ... (existing code)
 
-  //   // Initialize the input fields with the existing task data
-  //   if (existingTask) {
-  //     setTitle(existingTask.title);
-  //     setDescription(existingTask.description);
-  //   }
-  // }, [taskId, taskData]);
-  useEffect(() => {
-    console.log("Task ID:", taskId);
-    console.log("Task Data:", taskData);
+useEffect(() => {
   
-    const existingTask = taskData.data?.find((task) => task._id === taskId);
-    console.log("Existing Task:", existingTask);
-  
-    if (existingTask) {
-      setTitle(existingTask.title);
-      setDescription(existingTask.description);
-    }
-  }, [taskId, taskData]);
+  const existingTask = taskData.data?.find((task) => task._id === taskId);
+
+  if (existingTask) {
+    setTitle(existingTask.title);
+    setDescription(existingTask.description);
+    console.log(existingTask.data.title)
+    console.log(existingTask.description)
+  }
+}, [taskId, taskData]);
+
+// ... (existing code)
+
+
   
   
 
