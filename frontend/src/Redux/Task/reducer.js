@@ -13,26 +13,35 @@ switch(action.type){
   case GET_REQUEST:return{...state,  isLoading:true,
     isError:false}
   case GET_ERROR:return{...state,  isLoading:false,isError:true}
-  case GET_SUCCESS:return{...state,taskData:action.payload,isLoading:false,isError:false}
+  case GET_SUCCESS:
+    
+  return{...state,taskData:action.payload,isLoading:false,isError:false}
   case DELETE_REQUEST:
     return { ...state, isLoading: true, isError: false };
   case DELETE_ERROR:
     return { ...state, isLoading: false, isError: true };
   case DELETE_SUCCESS:
     // Update taskData after deleting a task
-    const updatedTaskData = state.taskData.filter(task => task._id !== action.payload);
-    return { ...state, taskData: [...updatedTaskData], isLoading: false, isError: false };
+    return {
+      ...state,
+      taskData: state.taskData.filter((task) => task._id !== action.payload),
+      isLoading: false,
+      isError: false,
+    };
     case UPDATE_REQUEST:
       return { ...state, isLoading: true, isError: false };
     case UPDATE_ERROR:
       return { ...state, isLoading: false, isError: true };
-    case UPDATE_SUCCESS:
-      // Update taskData after successfully updating a task
-      const updatedData = state.taskData.map((task) =>
-        task._id === action.payload._id ? action.payload : task
-      );
-      return { ...state, taskData: updatedData, isLoading: false, isError: false };
-  
+      case UPDATE_SUCCESS:
+        return {
+          ...state,
+          taskData: state.taskData.map((task) =>
+            task._id === action.payload._id ? action.payload : task
+          ),
+          isLoading: false,
+          isError: false,
+        };
+      
   default:return state
 
 }

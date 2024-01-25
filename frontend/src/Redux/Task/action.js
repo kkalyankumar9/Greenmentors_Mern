@@ -56,16 +56,17 @@ export const deleteTask = (taskId) => async (dispatch) => {
 export const updateTask = (taskId, updatedTaskData) => async (dispatch) => {
   dispatch({ type: UPDATE_REQUEST });
   try {
-      const response = await axios.put(`https://greenmentor-server.onrender.com/crud/update/${taskId}`, updatedTaskData, {
-          headers: { "Authorization": ` ${localStorage.getItem("token")}` }
-      });
-
-      // After updating a task, you might want to fetch the updated list of tasks
-      dispatch(getTaskdata());
-
-      dispatch({ type: UPDATE_SUCCESS, payload: response.data });
+    const response = await axios.patch(
+      `https://greenmentor-server.onrender.com/crud/update/${taskId}`,
+      updatedTaskData,
+      {
+        headers: { "Authorization": ` ${localStorage.getItem("token")}` }
+      }
+    );
+    console.log("Updating Task. Task ID:", taskId, "Updated Data:", updatedTaskData);
+    dispatch({ type: UPDATE_SUCCESS, payload: response.data });
   } catch (error) {
-      dispatch({ type: UPDATE_ERROR });
-      console.error(error);
+    dispatch({ type: UPDATE_ERROR, payload: error.message || "Update failed" });
+    console.error(error);
   }
 };
